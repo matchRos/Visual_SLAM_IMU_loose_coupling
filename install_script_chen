@@ -1,0 +1,98 @@
+# Update the system
+sudo apt-get update
+sudo apt-get upgrade
+
+# 1. install Realsense SDK(supports Ubuntu LTS kernels 4.4, 4.8, 4.10, 4.13, 4.15, 4.18* 5.0* and 5.3*)
+#Register the server’s public key :
+sudo apt-key adv --keyserver keys.gnupg.net --recv-key C8B3A55A6F3EFCDE || sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-key C8B3A55A6F3EFCDE
+
+# Add the server to the list of repositories :
+sudo add-apt-repository "deb http://realsense-hw-public.s3.amazonaws.com/Debian/apt-repo bionic main" -u
+# When upgrading, remove the old records:
+
+sudo rm -f /etc/apt/sources.list.d/realsense-public.list.
+sudo apt-get update.
+
+# In order to run demos install:
+sudo apt-get install librealsense2-dkms
+sudo apt-get install librealsense2-utils
+# The above two lines will deploy librealsense2 udev rules, build and activate kernel modules, runtime library and executable demos and tools.
+
+# Reconnect the Intel RealSense depth camera and run: realsense-viewer to verify the installation.
+
+# Developers shall install additional packages:
+sudo apt-get install librealsense2-dev
+sudo apt-get install librealsense2-dbg
+# With dev package installed, you can compile an application with librealsense using g++ -std=c++11 filename.cpp -lrealsense2 or an IDE of your choice.
+
+# Verify that the kernel is updated :
+# modinfo uvcvideo | grep "version:"should include realsense string
+
+# https://github.com/IntelRealSense/librealsense/blob/master/doc/distribution_linux.md
+# https://github.com/IntelRealSense/librealsense/blob/master/doc/installation.md
+
+# 2. install Realsense package
+# https://github.com/IntelRealSense/realsense-ros
+git clone https://github.com/IntelRealSense/librealsense.git
+sudo apt-get install git libssl-dev libusb-1.0-0-dev pkg-config libgtk-3-dev
+sudo apt-get install libglfw3-dev libgl1-mesa-dev libglu1-mesa-dev
+cd librealsense
+./scripts/setup_udev_rules.sh
+./scripts/patch-realsense-ubuntu-lts.sh
+mkdir build && cd build
+cmake ../ -DCMAKE_BUILD_TYPE=Release -DBUILD_EXAMPLES=true
+sudo make uninstall && make clean && make && sudo make install
+cd ..
+cd ..
+
+# 3. install git camke, pangolin, opencv, Eigen3
+# git cmake:
+sudo apt-get install git cmake
+sudo apt-get install libblas-dev liblapack-dev
+# pangolin:
+sudo apt-get install libglew-dev
+sudo apt-get install libboost-dev libboost-thread-dev libboost-filesystem-dev
+sudo apt-get install libpython2.7-dev
+sudo apt-get install build-essential
+git clone https://github.com/stevenlovegrove/Pangolin.git
+cd Pangolin
+mkdir build
+cd build
+cmake -DCPP11_NO_BOOST=1 ..
+make
+cd ..
+cd ..
+# opencv:
+sudo apt update
+sudo apt install python3-opencv
+sudo apt install build-essential cmake git pkg-config libgtk-3-dev \
+    libavcodec-dev libavformat-dev libswscale-dev libv4l-dev \
+    libxvidcore-dev libx264-dev libjpeg-dev libpng-dev libtiff-dev \
+    gfortran openexr libatlas-base-dev python3-dev python3-numpy \
+    libtbb2 libtbb-dev libdc1394-22-dev
+mkdir ~/opencv_build && cd ~/opencv_build
+git clone https://github.com/opencv/opencv.git
+git clone https://github.com/opencv/opencv_contrib.git
+cd ~/opencv_build/opencv
+mkdir build && cd build
+cmake -D CMAKE_BUILD_TYPE=RELEASE \
+    -D CMAKE_INSTALL_PREFIX=/usr/local \
+    -D INSTALL_C_EXAMPLES=ON \
+    -D INSTALL_PYTHON_EXAMPLES=ON \
+    -D OPENCV_GENERATE_PKGCONFIG=ON \
+    -D OPENCV_EXTRA_MODULES_PATH=~/opencv_build/opencv_contrib/modules \
+    -D BUILD_EXAMPLES=ON ..
+make -j8
+sudo make install
+#sudo apt-get install cmake git libgtk2.0-dev pkg-config libavcodec-dev libavformat-dev libswscale-dev
+# download opencv package: https://opencv.org/
+# mkdir release
+# cd release
+# cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local ..
+# make
+# sudo make install
+# Eigen3:
+# http://eigen.tuxfamily.org/index.php?title=Main_Page
+sudo apt-get install ros-melodic-realsense2-camera
+sudo apt install ros-melodic-rgbd-launch
+
