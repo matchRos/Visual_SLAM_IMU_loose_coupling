@@ -49,7 +49,7 @@ catkin_make
 ```
 build ORB_SLAM3:
 ```sh
-cd ~/catkin_ws/src/ORB_SLAM3
+cd ~/PATH/ORB_SLAM3
 chmod +x build.sh
 ./build.sh
 gedit ~/.bashrc
