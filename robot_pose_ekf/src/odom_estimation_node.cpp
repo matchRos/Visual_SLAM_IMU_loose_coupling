@@ -123,7 +123,7 @@ namespace estimation
     // subscribe to vo messages
     if (vo_used_){
       ROS_DEBUG("VO sensor can be used");
-      vo_sub_ = nh.subscribe("camera_odom", 10, &OdomEstimationNode::voCallback, this);
+      vo_sub_ = nh.subscribe("camera_pose", 10, &OdomEstimationNode::voCallback, this);
     }
     else ROS_DEBUG("VO sensor will NOT be used");
 
