@@ -11,6 +11,7 @@ This work is based on [ORB_SLAM3](https://github.com/UZ-SLAMLab/ORB_SLAM3), [rob
    - [Camera intrinsics calibration](#Camera-intrinsics-calibration)
    - [Unified calibration](#Unified-calibration)
 - [Fusion](#Fusion)
+- [Experiment and results](#Experiment-and-results)
 
 ## Environment
 Ubuntu 18.04
@@ -151,4 +152,8 @@ estimated pose from fusion of ORB_SLAM3 and IMU is:
 ```sh
 rostopic echo /robot_pose_ekf/odom_combined
 ```
+## Experiment and results
+In order to test localization accuracy, FARO vantage laser tracker is used. Spherically mounted retroreflector (SMR), which could be regarded as tracking target of FARO,
+is stuck on the camera. Since FARO can measure the position of SMR with extremely high accuracy, the FARO measurement could be regarded as real coordinate. 
 
+FARO measurements are saved in `~/Examples/ORB_SLAM_results/test09114.xlsx` and `~/Examples/ORB_SLAM_results/test09118.xlsx`. The results of ORB_SLAM3 without IMU are saved in `~/Examples/ORB_SLAM_results/cpose09114.bag` and `~/Examples/ORB_SLAM_results/cpose09118.bag`. The Matlab-script `~/Examples/ORB_SLAM_results/Error_cal_orb.m` is to calculate absolute trajectory error (ATE). The results of ORB_SLAM IMU fusion are saved in `~/Examples/EKF_results/ekf09114.bag` and `~/Examples/EKF_results/ekf09118.bag`. The Matlab-script `~/Examples/EKF_results/Error_cal_ekf.m` is used to calculate ATE of the fusion.
