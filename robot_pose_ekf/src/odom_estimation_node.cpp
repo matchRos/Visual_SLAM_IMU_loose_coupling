@@ -126,7 +126,7 @@ namespace estimation
       vo_sub_ = nh.subscribe("camera_pose", 10, &OdomEstimationNode::voCallback, this);
     }
     else ROS_DEBUG("VO sensor will NOT be used");
-
+   // subscibe to gps
     if (gps_used_){
       ROS_DEBUG("GPS sensor can be used");
       gps_sub_ = nh.subscribe("gps", 10, &OdomEstimationNode::gpsCallback, this);
