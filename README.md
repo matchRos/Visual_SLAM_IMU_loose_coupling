@@ -47,7 +47,7 @@ git clone https://github.com/hustchenli/Visual_SLAM_IMU_loose_coupling.git
 cd ..
 catkin_make
 ```
-install ORB_SLAM3:
+build ORB_SLAM3:
 ```sh
 cd ~/catkin_ws/src/ORB_SLAM3
 chmod +x build.sh
@@ -57,7 +57,7 @@ export ROS_PACKAGE_PATH=${ROS_PACKAGE_PATH}:/PATH/ORB_SLAM3/Examples/ROS
 chmod +x build_ros.sh
 ./build_ros.sh
 ```
-install robot_pose_ekf
+build robot_pose_ekf
 ```sh
 rosdep install robot_pose_ekf
 roscd robot_pose_ekf
